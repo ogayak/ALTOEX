@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ALTOEX — Coin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Chart.js + time adapter -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+</head>
+<body>
+  <header id="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo" href="index.html"><div class="mark">AX</div><div class="text">ALTOEX</div></a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">☰</button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="market.html">Market</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="quant.html">Quant Lab</a></li>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+      <ul>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="market.html">Market</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="quant.html">Quant Lab</a></li>
+
+      </ul>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <div class="coin-header">
+        <img id="coin-icon" src="" alt="" width="28" height="28" style="border-radius:50%">
+        <div class="coin-title" id="coin-title">Loading…</div>
+      </div>
+      <div id="statline" style="margin-bottom:12px">--</div>
+
+      <div class="timeframe" role="tablist" aria-label="Timeframe">
+        <button class="active" data-days="1" role="tab" aria-selected="true">24h</button>
+        <button data-days="7" role="tab">7d</button>
+        <button data-days="30" role="tab">30d</button>
+        <button data-days="365" role="tab">1y</button>
+        <button id="csv" class="btn" style="margin-left:auto">Download CSV</button>
+      </div>
+
+      <div class="chart-card" style="margin-top:10px">
+        <div id="load-status" style="font-size:12px;opacity:.8;margin-bottom:8px"></div>
+        <div class="chart-bar"><canvas id="priceChart"></canvas></div>
+      </div>
+
+      <div class="grid-3" style="margin-top:14px">
+        <div class="box"><h4>Build Faster</h4><p>Export price history as CSV and iterate on strategies locally.</p></div>
+        <div class="box"><h4>Reproducible</h4><p>Endpoints and time zones are documented — no guesswork.</p></div>
+        <div class="box"><h4>Future-Proof</h4><p>Add on-chain metrics and order-book depth as we expand.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="coin.js"></script>
+</body>
+</html>

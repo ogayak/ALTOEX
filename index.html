@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ALTOEX — Exchange & Quant Stack</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header id="site-header" role="banner" aria-label="Main header">
+    <div class="header-inner">
+      <a class="logo" href="index.html" aria-label="ALTOEX home">
+        <div class="mark">AX</div>
+        <div class="text">ALTOEX</div>
+      </a>
+
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">☰</button>
+
+      <nav aria-label="Main navigation">
+        <ul class="nav-links" role="list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="market.html">Market</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="quant.html">Quant Lab</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="market.html">Market</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="quant.html">Quant Lab</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+
+    <!-- HERO -->
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <div class="brand-hero">
+          <div class="brand-mark">AX</div>
+          <div>
+            <h1 id="hero-title">ALTOEX — Trade. Test. Scale.</h1>
+            <p class="tag">Institutional execution, research-grade data, and a quant-first toolchain — for funds, quant teams, and builders who want real edge.</p>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="market.html" class="btn">Launch App</a>
+          <a href="quant.html" class="btn ghost">Explore Quant Lab</a>
+        </div>
+
+        <!-- Ticker / live snapshot -->
+        <div class="ticker-wrap">
+          <div id="ticker" class="ticker" aria-live="polite">Loading live prices…</div>
+        </div>
+
+        <!-- Price tiles -->
+        <div class="prices" id="prices" aria-live="polite">
+          <div class="tile" id="btc">
+            <div class="top">
+              <div class="symbol">BTC</div>
+              <div class="value">$<span class="amt">--</span></div>
+            </div>
+            <div class="chg" id="btc-chg">--</div>
+            <div class="time" id="btc-time">--</div>
+          </div>
+
+          <div class="tile" id="eth">
+            <div class="top">
+              <div class="symbol">ETH</div>
+              <div class="value">$<span class="amt">--</span></div>
+            </div>
+            <div class="chg" id="eth-chg">--</div>
+            <div class="time" id="eth-time">--</div>
+          </div>
+
+          <div class="tile" id="sol">
+            <div class="top">
+              <div class="symbol">SOL</div>
+              <div class="value">$<span class="amt">--</span></div>
+            </div>
+            <div class="chg" id="sol-chg">--</div>
+            <div class="time" id="sol-time">--</div>
+          </div>
+        </div>
+
+        <!-- Portfolio quick -->
+        <div class="grid-3" id="portfolio">
+          <div class="box">
+            <h4>Portfolio Value</h4>
+            <div class="stat">$<span id="portfolio-value">--</span></div>
+            <div class="small-text">Holdings: BTC, ETH, ALT</div>
+          </div>
+          <div class="box">
+            <h4>24h Change</h4>
+            <div id="portfolio-change">--</div>
+            <div class="small-text">Real-time P&amp;L</div>
+          </div>
+          <div class="box">
+            <h4>Estimated APY</h4>
+            <div>3.8%</div>
+            <div class="small-text">Staking &amp; Savings</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: cards / highlights -->
+      <aside class="cards-wrap" aria-label="Highlights">
+        <div class="cards" id="cards" tabindex="0" role="list">
+          <article class="card" role="listitem" style="background-image:url('images/card1.jpg')">
+            <div class="card-content"><h3>Instant Swap</h3><p>Low slippage, transparent fees — swap across AMMs and aggregated liquidity.</p></div>
+          </article>
+          <article class="card" role="listitem" style="background-image:url('images/card2.jpg')">
+            <div class="card-content"><h3>Portfolio Insights</h3><p>Allocation suggestions, risk bands, and P&L drill-downs.</p></div>
+          </article>
+          <article class="card" role="listitem" style="background-image:url('images/card3.jpg')">
+            <div class="card-content"><h3>Secure Wallets</h3><p>Non-custodial options and hardware integrations for funds.</p></div>
+          </article>
+          <article class="card" role="listitem" style="background-image:url('images/card4.jpg')">
+            <div class="card-content"><h3>Build & Backtest</h3><p>Download OHLCV, run parameter grids, and ship strategies.</p></div>
+          </article>
+        </div>
+      </aside>
+    </section>
+
+    <!-- TRUST MARQUEE -->
+    <section class="partners" aria-label="Trusted by">
+      <div class="marquee" id="partners-marquee">
+        <span>Trusted by 10,000+ traders · API latency &lt; 20ms · $2B+ volume secured · SOC2 controls · Build reproducible edge ·</span>
+      </div>
+    </section>
+
+    <!-- QUANT LAB / BACKTESTER -->
+<section id="quant-lab" class="box" style="margin-top:28px;">
+  <h2>Parameter-Grid Backtester</h2>
+  <p style="opacity:.85; margin-bottom:12px;">
+    Run SMA crossover simulations and see results instantly in the browser.
+  </p>
+
+  <!-- Inputs for grid -->
+  <div class="bt-controls" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+    <label>Short SMA: 
+      <input id="sma-short" type="number" value="10" min="1" max="200" />
+    </label>
+    <label>Long SMA: 
+      <input id="sma-long" type="number" value="50" min="1" max="500" />
+    </label>
+    <label>Coin: 
+      <select id="bt-coin">
+        <option value="BTC">Bitcoin</option>
+        <option value="ETH">Ethereum</option>
+        <option value="SOL">Solana</option>
+      </select>
+    </label>
+    <button class="btn" id="run-backtest">Run Backtest</button>
+  </div>
+
+  <!-- Chart -->
+ <div id="bt-wrapper" style="max-width:100%;height:400px;margin-top:12px;position:relative;">
+  <canvas id="bt-chart"></canvas>
+</div>
+<div id="bt-summary" style="margin-top:12px;"></div>
+
+  <!-- Summary -->
+  <div id="bt-summary" style="margin-top:12px;color:#fff;"></div>
+</section>
+
+    <!-- FEATURE GRID -->
+    <section class="grid-3" aria-label="Key features">
+      <div class="box">
+        <h4>Low Fees</h4>
+        <p>Transparent maker & taker pricing designed to scale with your AUM.</p>
+      </div>
+      <div class="box">
+        <h4>Bank-Level Security</h4>
+        <p>Multi-sig custody, periodic audits, and hardened key management.</p>
+      </div>
+      <div class="box">
+        <h4>Quant-Ready</h4>
+        <p>Deterministic OHLCV, CSV export, and reproducible market snapshots for research.</p>
+      </div>
+    </section>
+
+    <!-- INSIGHT CTA -->
+    <section class="box center">
+      <h2>Stop guessing. Start compounding.</h2>
+      <p>
+        ALTOEX unifies execution, research, and portfolio tooling. Backtest robustly, optimize parameters, and move to execution — all with enterprise-grade controls and the flexibility builders demand.
+      </p>
+      <a href="quant.html" class="btn">Open Quant Lab</a>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="grid-3">
+      <div class="box"><h4>Lite</h4><p>$0 / mo • Essentials</p></div>
+      <div class="box pro-plan">
+        <h4>Pro</h4><p>$29 / mo • Advanced tools + priority support</p>
+      </div>
+      <div class="box"><h4>Enterprise</h4><p>Custom plans, SLAs, and dedicated routing</p></div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="box newsletter">
+      <h3>Join the Alpha Feed</h3>
+      <p>Backtests, strategy drops, and market intelligence — weekly.</p>
+      <form id="newsletter">
+        <input id="newsletter-email" type="email" placeholder="you@domain.com" required />
+        <button type="submit" class="btn">Subscribe</button>
+      </form>
+      <p id="newsletter-msg" class="small-muted"></p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>© <span id="year">2025</span> ALTOEX — Built for traders & hodlers.</div>
+    </footer>
+
+  </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

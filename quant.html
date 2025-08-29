@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ALTOEX — Quant Lab</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- reuse your main stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
+
+  <!-- Chart.js + time adapter (Luxon) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+
+  <style>
+    /* small additional styles for Quant page */
+    .quant-controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; align-items:center; }
+    .quant-controls .group { background:var(--card-bg); border:1px solid var(--glass-border); padding:10px; border-radius:10px; display:flex; gap:8px; align-items:center;}
+    .quant-controls label { font-size:13px; color:var(--muted); }
+    .quant-meta { display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; }
+    .quant-stats { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+    .stat { background:var(--card-bg); border:1px solid var(--glass-border); padding:10px; border-radius:10px; min-width:140px }
+    .trades-table { width:100%; border-collapse:collapse; margin-top:12px }
+    .trades-table th, .trades-table td { padding:8px 10px; border-bottom:1px solid var(--glass-border) }
+    .small-muted { font-size:13px; color:var(--muted) }
+    .file-input { display:inline-block; }
+    .danger { color:#ef4444 }
+  </style>
+</head>
+<body>
+  <!-- header (keep consistent with your site header) -->
+  <header id="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo" href="index.html"><div class="mark">AX</div><div class="text">ALTOEX</div></a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false">☰</button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="market.html">Market</a></li>
+          <li><a href="quant.html">Quant Lab</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+      <ul>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="market.html">Market</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="quant.html">Quant Lab</a></li>
+
+      </ul>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Quant Lab — backtest & prototype</h1>
+    <p class="small-muted">Prototype backtester for quick experiments. Use sample data or upload your own OHLCV CSV (timestamp,open,high,low,close,volume).</p>
+
+    <!-- controls -->
+    <div class="quant-controls">
+      <div class="group">
+        <label>Source:</label>
+        <select id="source">
+          <option value="coingecko" selected>CoinGecko (live)</option>
+          <option value="csv">Upload CSV</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <label>Coin ID:</label>
+        <input id="coinId" type="text" value="bitcoin" style="width:140px" />
+      </div>
+
+      <div class="group">
+        <label>Days:</label>
+        <select id="days">
+          <option value="1">1</option>
+          <option value="7" selected>7</option>
+          <option value="30">30</option>
+          <option value="90">90</option>
+          <option value="365">365</option>
+        </select>
+      </div>
+
+      <div class="group">
+        <label>Initial capital</label>
+        <input id="capital" type="number" value="10000" style="width:100px" />
+      </div>
+
+      <div class="group">
+        <label>Short SMA</label>
+        <input id="smaShort" type="number" value="9" style="width:70px" />
+        <label>Long SMA</label>
+        <input id="smaLong" type="number" value="21" style="width:70px" />
+      </div>
+
+      <div class="group">
+        <label>Slippage %</label>
+        <input id="slippage" type="number" step="0.01" value="0.1" style="width:70px" />
+        <label>Commission %</label>
+        <input id="commission" type="number" step="0.01" value="0.05" style="width:70px" />
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input id="csvFile" class="file-input" type="file" accept=".csv" style="display:none" />
+      <button id="chooseCsv" class="btn ghost">Upload CSV</button>
+      <button id="loadSample" class="btn">Load Sample (BTC 30d)</button>
+      <button id="runBacktest" class="btn">Run Backtest</button>
+      <button id="downloadTrades" class="btn ghost" disabled>Download Trades CSV</button>
+    </div>
+
+    <div class="quant-meta">
+      <div class="small-muted">Data rows: <span id="rowsCount">—</span></div>
+      <div class="small-muted">Last timestamp: <span id="lastTs">—</span></div>
+      <div class="small-muted danger" id="limitWarn" style="display:none">Large dataset — client may slow down</div>
+    </div>
+
+    <!-- chart -->
+    <div style="margin-top:12px" class="chart-card">
+      <div id="chart-loading" class="small-muted" style="display:none">Loading data…</div>
+      <canvas id="quantChart" height="220"></canvas>
+    </div>
+
+    <!-- stats -->
+    <div class="quant-stats" id="statsArea" style="margin-top:12px">
+      <div class="stat"><div class="small-muted">Final Equity</div><div id="stat-equity" style="font-weight:800">$—</div></div>
+      <div class="stat"><div class="small-muted">Total Return</div><div id="stat-return" style="font-weight:800">—</div></div>
+      <div class="stat"><div class="small-muted">CAGR</div><div id="stat-cagr" style="font-weight:800">—</div></div>
+      <div class="stat"><div class="small-muted">Sharpe</div><div id="stat-sharpe" style="font-weight:800">—</div></div>
+      <div class="stat"><div class="small-muted">Max Drawdown</div><div id="stat-drawdown" style="font-weight:800">—</div></div>
+    </div>
+
+    <!-- trades -->
+    <h3 style="margin-top:18px">Trades</h3>
+    <table class="trades-table" id="tradesTable">
+      <thead>
+        <tr><th>Side</th><th>Date</th><th>Price</th><th>Size</th><th>Value</th><th>PnL</th></tr>
+      </thead>
+      <tbody id="tradesBody"></tbody>
+    </table>
+
+    <h3 style="margin-top:18px">Equity Curve (CSV available)</h3>
+    <div style="margin-top:8px">
+      <canvas id="equityChart" height="160"></canvas>
+    </div>
+
+    <footer style="margin-top:18px">
+      <div class="small-muted">Quant Lab (prototype). For production-grade algo execution you need server-side engines, order routing, and exchange connectors.</div>
+    </footer>
+  </main>
+
+  <script src="quant.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

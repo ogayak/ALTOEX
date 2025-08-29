@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ALTOEX — Market</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header id="site-header" role="banner">
+    <div class="header-inner">
+      <a class="logo" href="index.html"><div class="mark">AX</div><div class="text">ALTOEX</div></a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">☰</button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="market.html">Market</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="quant.html">Quant Lab</a></li>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+      <ul>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="market.html">Market</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="quant.html">Quant Lab</a></li>
+
+      </ul>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section aria-labelledby="market-title">
+      <h2 id="market-title" style="margin-bottom:12px">Market Overview</h2>
+
+      <div class="market-controls">
+        <div class="market-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="search" type="search" placeholder="Search coin or symbol… (e.g. BTC, ETH)" autocomplete="off">
+        </div>
+        <select id="fiat" class="select" aria-label="Fiat currency">
+          <option value="usd">USD</option>
+          <option value="eur">EUR</option>
+          <option value="ngn">NGN</option>
+        </select>
+      </div>
+
+      <div id="status" style="margin:6px 0 10px; font-size:13px; opacity:.85;"></div>
+
+      <div id="market-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="market.js"></script>
+</body>
+</html>
