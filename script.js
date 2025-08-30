@@ -277,3 +277,46 @@ function runBacktest() {
 
 // Event listener
 document.getElementById('run-backtest').addEventListener('click', runBacktest);
+// Mobile menu toggle
+const menuToggle = document.getElementById("menu-toggle");
+const mobileNav = document.getElementById("mobile-nav");
+
+menuToggle.addEventListener("click", () => {
+  const expanded = menuToggle.getAttribute("aria-expanded") === "true" || false;
+  menuToggle.setAttribute("aria-expanded", !expanded);
+  mobileNav.classList.toggle("open");
+});
+
+// Optional: close menu when a link is clicked (mobile)
+mobileNav.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileNav.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", false);
+  });
+});
+
+// Animate cards on load
+const cards = document.querySelectorAll(".card");
+const tiles = document.querySelectorAll(".tile");
+
+function revealElements(elements) {
+  elements.forEach((el, idx) => {
+    setTimeout(() => el.classList.add("visible"), idx * 100);
+  });
+}
+
+// Reveal hero cards and tiles
+window.addEventListener("load", () => {
+  revealElements(cards);
+  revealElements(tiles);
+});
+
+// Optional: smooth scroll for internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute("href"));
+    if(target) target.scrollIntoView({ behavior: "smooth" });
+  });
+});
+
